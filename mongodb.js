@@ -3,7 +3,7 @@ const { MongoClient, ObjectID } = require('mongodb');
 const connectionURL = 'mongodb://127.0.0.1/27017';
 const databaseName = 'task-manager';
 
-//! to get random id
+//! to get random i
 const id = new ObjectID();
 console.log(id);
 console.log(id.getTimestamp());
@@ -44,5 +44,11 @@ MongoClient.connect(
         // );
 
         //! fetching data from database
+        db.collection('users').findOne({ name: 'Piyush' }, (err, result) => {
+            if (err) {
+                return console.log('Error');
+            }
+            console.log(result);
+        });
     }
 );
