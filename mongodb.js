@@ -11,7 +11,6 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: 
 
     db.collection('users').insertOne({ name: 'Piyush Pandey', age: 22 }, (err, res) => {
         if (err) return console.log('Unable to insert')
-
         console.log(res.ops);
     })
 })
