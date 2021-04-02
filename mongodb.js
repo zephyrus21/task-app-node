@@ -1,54 +1,17 @@
-const { MongoClient, ObjectID } = require('mongodb');
+const mongodb = require('mongodb')
+const MongoClient = mongodb.MongoClient
 
-const connectionURL = 'mongodb://127.0.0.1/27017';
-const databaseName = 'task-manager';
+const connectionURL = 'mongodb://127.0.0.1:27017'
+const databaseName = 'task-manager'
 
-//! to get random i
-const id = new ObjectID();
-console.log(id);
-console.log(id.getTimestamp());
+MongoClient.connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
+    if (error) return console.log('Unable to connect')
 
-//! create a database
-MongoClient.connect(
-    connectionURL,
-    { useUnifiedTopology: true },
-    (err, client) => {
-        if (err) {
-            return console.log('Unable to connect');
-        }
+    const db = client.db(databaseName)
 
-        const db = client.db(databaseName);
+    db.collection('users').insertOne({ name: 'Piyush Pandey', age: 22 }, (err, res) => {
+        if (err) return console.log('Unable to insert')
 
-        //! insert call and display results
-        // db.collection('users').insertOne(
-        //     { name: 'Piyush', age: 20 },
-        //     (error, result) => {
-        //         if (error) {
-        //             return console.log('Error inserting');
-        //         }
-        //         console.log(result.ops);
-        //     }
-        // );
-
-        // db.collection('users').insertMany(
-        //     [
-        //         { name: 'Neha', age: 20 },
-        //         { name: 'Piyush', age: 20 },
-        //     ],
-        //     (error, result) => {
-        //         if (error) {
-        //             return console.log('Error inserting');
-        //         }
-        //         console.log(result.ops);
-        //     }
-        // );
-
-        //! fetching data from database
-        db.collection('users').findOne({ name: 'Piyush' }, (err, result) => {
-            if (err) {
-                return console.log('Error');
-            }
-            console.log(result);
-        });
-    }
-);
+        console.log(res.ops);
+    })
+})
