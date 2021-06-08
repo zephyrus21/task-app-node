@@ -45,12 +45,14 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
+//! This is a virtual field refering to Task model
 userSchema.virtual('tasks', {
   ref: 'Task',
   localField: '_id',
   foreignField: 'owner',
 });
 
+//! This are the functions used in the user router
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 
@@ -86,6 +88,7 @@ userSchema.methods.toJSON = function () {
   return userObject;
 };
 
+//! This will execute the request is saved
 userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 8);
@@ -94,6 +97,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+//! This will execute the request is removed
 userSchema.pre('remove', async function (next) {
   await Task.deleteMany({ owner: this._id });
 
