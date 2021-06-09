@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+require('dotenv').config({ path: './src/config/dev.env' });
+
 const auth = async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
-    const decodedToken = jwt.verify(token, 'zephyrus21');
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findOne({
       _id: decodedToken._id,
       'tokens.token': token,
