@@ -1,14 +1,18 @@
 {
   "name": "task-app",
   "version": "1.0.0",
+  "author": "Piyush",
+  "license": "ISC",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
+    "test": "env-cmd -f ./config/test.env jest --watch"
   },
-  "author": "Piyush",
-  "license": "ISC",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "dependencies": {
     "@sendgrid/mail": "^7.4.4",
     "bcryptjs": "^2.4.3",
@@ -21,7 +25,9 @@
     "validator": "^13.1.17"
   },
   "devDependencies": {
-    "dotenv": "^10.0.0",
-    "nodemon": "^2.0.4"
+    "env-cmd": "^10.1.0",
+    "jest": "^27.0.4",
+    "nodemon": "^2.0.4",
+    "supertest": "^6.1.3"
   }
 }
